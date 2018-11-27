@@ -20,7 +20,7 @@ class ContainerTest {
         val foo1: Foo = container.get()
         val foo2: Foo = container.get()
 
-        assertThat(foo1).isEqualTo(foo2)
+        assertThat(foo1).isNotEqualTo(foo2)
     }
 
     @Test
