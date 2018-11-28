@@ -6,37 +6,16 @@ buildscript {
     }
 }
 
-plugins {
-    id 'org.jetbrains.kotlin.jvm' version '1.2.51'
-}
+allprojects {
+    repositories {
+        mavenCentral()
+    }
 
-group 'com.jbrunton'
-version '1.0-SNAPSHOT'
+    apply plugin: 'org.jetbrains.dokka'
 
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    def kotlin_version = '1.3.10'
-
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    testImplementation 'junit:junit:4.12'
-    testImplementation 'org.assertj:assertj-core:3.8.0'
-}
-
-apply plugin: 'org.jetbrains.dokka'
-
-compileKotlin {
-    kotlinOptions.jvmTarget = "1.6"
-}
-compileTestKotlin {
-    kotlinOptions.jvmTarget = "1.6"
-}
-
-dokka {
-    outputFormat = 'html'
-    outputDirectory = 'docs/dokka'
-    includes = ['src/main/kotlin/com/jbrunton/inject/package-summary.md']
+    dokka {
+        outputFormat = 'html'
+        outputDirectory = 'docs/dokka'
+        includes = ['mini-container/src/main/kotlin/com/jbrunton/inject/package-summary.md']
+    }
 }
