@@ -1,3 +1,3 @@
+include ':mini-container-core'
 include ':mini-container-viewmodel'
 rootProject.name = 'mini-container'
-

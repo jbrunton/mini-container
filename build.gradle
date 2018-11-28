@@ -8,8 +8,9 @@ buildscript {
         jcenter()
     }
     dependencies {
+        //classpath "com.android.tools.build:gradle:$android_gradle_version"
         // Kotlin
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        //classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         // Dokka
         classpath "org.jetbrains.dokka:dokka-android-gradle-plugin:$dokka_version"
         // Android
@@ -28,6 +29,6 @@ allprojects {
     dokka {
         outputFormat = 'html'
         outputDirectory = 'docs/dokka'
-        includes = ['mini-container/src/main/kotlin/com/jbrunton/inject/package-summary.md']
+        includes = ['mini-container-core/src/main/kotlin/com/jbrunton/inject/package-summary.md']
     }
 }

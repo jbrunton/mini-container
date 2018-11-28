@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+//apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 28
@@ -25,7 +26,7 @@ android {
 }
 
 dependencies {
-    api project(":mini-container")
+    api project(":mini-container-core")
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -33,4 +34,16 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.3.10"
+    testImplementation "org.jetbrains.kotlin:kotlin-reflect:1.3.10"
+    testImplementation 'org.assertj:assertj-core:3.8.0'
+
+    implementation("androidx.lifecycle:lifecycle-extensions:2.0.0") {
+        exclude module: "lifecycle-livedata"
+        exclude module: "lifecycle-service"
+        exclude module: "lifecycle-process"
+        exclude module: "runtime"
+        exclude group: "androidx.legacy"
+    }
 }
