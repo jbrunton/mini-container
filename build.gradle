@@ -8,13 +8,14 @@ buildscript {
         jcenter()
     }
     dependencies {
-        //classpath "com.android.tools.build:gradle:$android_gradle_version"
         // Kotlin
         //classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         // Dokka
         classpath "org.jetbrains.dokka:dokka-android-gradle-plugin:$dokka_version"
         // Android
         classpath "com.android.tools.build:gradle:$android_gradle_version"
+
+        classpath "digital.wup:android-maven-publish:3.4.0"
     }
 }
 
@@ -22,6 +23,7 @@ allprojects {
     repositories {
         mavenCentral()
         google()
+        jcenter()
     }
 
     apply plugin: 'org.jetbrains.dokka'
