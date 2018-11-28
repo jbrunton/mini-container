@@ -1,3 +1,11 @@
+buildscript {
+    dependencies {
+        def dokka_version = '0.9.17'
+
+        classpath "org.jetbrains.dokka:dokka-gradle-plugin:${dokka_version}"
+    }
+}
+
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.2.51'
 }
@@ -18,9 +26,17 @@ dependencies {
     testImplementation 'org.assertj:assertj-core:3.8.0'
 }
 
+apply plugin: 'org.jetbrains.dokka'
+
 compileKotlin {
     kotlinOptions.jvmTarget = "1.6"
 }
 compileTestKotlin {
     kotlinOptions.jvmTarget = "1.6"
+}
+
+dokka {
+    outputFormat = 'html'
+    outputDirectory = 'docs/dokka'
+    includes = ['src/main/kotlin/com/jbrunton/inject/package-summary.md']
 }
