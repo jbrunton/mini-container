@@ -1,14 +1,26 @@
 buildscript {
-    dependencies {
-        def dokka_version = '0.9.17'
+    def dokka_version = '0.9.17'
+    def kotlin_version = '1.3.10'
+    def android_gradle_version = "3.2.1"
 
-        classpath "org.jetbrains.dokka:dokka-gradle-plugin:${dokka_version}"
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        // Kotlin
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        // Dokka
+        classpath "org.jetbrains.dokka:dokka-android-gradle-plugin:$dokka_version"
+        // Android
+        classpath "com.android.tools.build:gradle:$android_gradle_version"
     }
 }
 
 allprojects {
     repositories {
         mavenCentral()
+        google()
     }
 
     apply plugin: 'org.jetbrains.dokka'
