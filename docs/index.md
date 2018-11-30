@@ -12,7 +12,41 @@ title: MiniContainer
 
 `MiniContainer` is a simple Kotlin dependency injection framework with a concise DSL and a straightforward scoping mechanism.
 
+The syntax is heavily inspired by [Koin](https://insert-koin.io/), but with an inheritance-based scoping mechanism instead.
+
 ## A simple example
+
+```kotlin
+class UserViewModel(val user: User, val repository: HttpRepository) {
+    ...
+}
+
+val HttpModule = module {
+    single { RetrofitService.create() }
+    single { HttpRepository(service = get()) }
+}
+
+val UiModule = module {
+    factory{ (user: User) -> UserViewModel(user, get()) }
+}
+
+class MyApp : Application(), HasContainer {
+    override val container = Container()
+    
+    override fun onCreate() {
+        super.onCreate()
+        container.register(HttpModule, UiModule)
+    }
+}
+
+class MyActivity : FragmentActivity(), HasContainer {
+    val repository: HttpRepository by inject()
+    val viewModel: UserViewModel by injectViewModel() // from mini-container-android
+
+    override val container by lazy { (applicationContext as HasContainer).container }
+}
+
+```
 
 ## Getting started
 
@@ -31,7 +65,8 @@ Then add the `mini-container` artifact as a dependency to your build file:
 
 ```groovy
 dependencies {
-    implementation 'com.github.jbrunton:mini-container:VERSION'
+    implementation 'com.github.jbrunton:mini-container:VERSION' // core injection framework
+    implementation 'com.github.jbrunton:mini-container-android:VERSION' // for injecting androidx viewmodels
 }
 ```
 
