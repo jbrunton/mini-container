@@ -41,9 +41,11 @@ class MyApp : Application(), HasContainer {
 
 class MyActivity : FragmentActivity(), HasContainer {
     val repository: HttpRepository by inject()
-    val viewModel: UserViewModel by injectViewModel() // from mini-container-android
+    val viewModel: UserViewModel by injectViewModel()
 
-    override val container by lazy { (applicationContext as HasContainer).container }
+    override val container by lazy {
+        (applicationContext as HasContainer).container
+    }
 }
 
 ```
@@ -65,8 +67,10 @@ Then add the `mini-container` artifact as a dependency to your build file:
 
 ```groovy
 dependencies {
-    implementation 'com.github.jbrunton:mini-container:VERSION' // core injection framework
-    implementation 'com.github.jbrunton:mini-container-android:VERSION' // for injecting androidx viewmodels
+    // core injection framework
+    implementation 'com.github.jbrunton:mini-container:VERSION'
+    // for injecting androidx viewmodels
+    implementation 'com.github.jbrunton:mini-container-android:VERSION'
 }
 ```
 
