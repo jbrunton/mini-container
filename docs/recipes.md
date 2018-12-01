@@ -47,8 +47,8 @@ fun UserModule(user: User) = module {
     factory { UserViewModel(user = get()) }
 }
 
-// Then later when we have our user create a new child container. The scope of this module is then simply the scope of
-// this new container.
+// Once we have our user create a new child container. The scope of
+// this module is then simply the scope of userContainer.
 val userContainer = container.createChildContainer().apply {
     register(UserModule(user))
 }
