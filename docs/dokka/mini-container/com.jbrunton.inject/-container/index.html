@@ -9,6 +9,11 @@
 <br/>
 <h1>Container</h1>
 <code><span class="keyword">class </span><span class="identifier">Container</span></code>
+<p>The dependency injection container. Maintains mappings between types (as <code>KClass&lt;*&gt;</code> and <code>Definition&lt;T&gt;</code> functions
+which will resolve to an instance.</p>
+<h3>Parameters</h3>
+<p><a name="parent"></a>
+<code>parent</code> - the parent container.</p>
 <h3>Constructors</h3>
 <table>
 <tbody>
@@ -17,7 +22,10 @@
 <p><a href="-init-.html">&lt;init&gt;</a></p>
 </td>
 <td>
-<code><span class="identifier">Container</span><span class="symbol">(</span><span class="identifier" id="com.jbrunton.inject.Container$<init>(com.jbrunton.inject.Container)/parent">parent</span><span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">Container</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span></code></td>
+<code><span class="identifier">Container</span><span class="symbol">(</span><span class="identifier" id="com.jbrunton.inject.Container$<init>(com.jbrunton.inject.Container)/parent">parent</span><span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">Container</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span></code>
+<p>The dependency injection container. Maintains mappings between types (as <code>KClass&lt;*&gt;</code> and <code>Definition&lt;T&gt;</code> functions
+which will resolve to an instance.</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -29,7 +37,9 @@
 <p><a href="parent.html">parent</a></p>
 </td>
 <td>
-<code><span class="keyword">val </span><span class="identifier">parent</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">Container</span></a><span class="symbol">?</span></code></td>
+<code><span class="keyword">val </span><span class="identifier">parent</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">Container</span></a><span class="symbol">?</span></code>
+<p>the parent container.</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -56,7 +66,10 @@
 <p><a href="factory.html">factory</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">&gt;</span> <span class="identifier">factory</span><span class="symbol">(</span><span class="identifier" id="com.jbrunton.inject.Container$factory(kotlin.Boolean, kotlin.Function1((com.jbrunton.inject.ParameterList, com.jbrunton.inject.Container.factory.T)))/override">override</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;false<span class="symbol">, </span><span class="identifier" id="com.jbrunton.inject.Container$factory(kotlin.Boolean, kotlin.Function1((com.jbrunton.inject.ParameterList, com.jbrunton.inject.Container.factory.T)))/definition">definition</span><span class="symbol">:</span>&nbsp;<a href="../-definition.html"><span class="identifier">Definition</span></a><span class="symbol">&lt;</span><a href="factory.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">&gt;</span> <span class="identifier">factory</span><span class="symbol">(</span><span class="identifier" id="com.jbrunton.inject.Container$factory(kotlin.Boolean, kotlin.Function1((com.jbrunton.inject.ParameterList, com.jbrunton.inject.Container.factory.T)))/override">override</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;false<span class="symbol">, </span><span class="identifier" id="com.jbrunton.inject.Container$factory(kotlin.Boolean, kotlin.Function1((com.jbrunton.inject.ParameterList, com.jbrunton.inject.Container.factory.T)))/definition">definition</span><span class="symbol">:</span>&nbsp;<a href="../-definition.html"><span class="identifier">Definition</span></a><span class="symbol">&lt;</span><a href="factory.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Registers a factory <a href="../-definition.html">Definition</a> for the type <code>T</code>. All subsequent calls to <a href="get.html">get</a> for <code>T::class</code> will be
+resolved by invoking <code>definition</code>.</p>
+</td>
 </tr>
 <tr>
 <td>
@@ -105,7 +118,10 @@
 <p><a href="single.html">single</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">&gt;</span> <span class="identifier">single</span><span class="symbol">(</span><span class="identifier" id="com.jbrunton.inject.Container$single(kotlin.Boolean, kotlin.Function1((com.jbrunton.inject.ParameterList, com.jbrunton.inject.Container.single.T)))/override">override</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;false<span class="symbol">, </span><span class="identifier" id="com.jbrunton.inject.Container$single(kotlin.Boolean, kotlin.Function1((com.jbrunton.inject.ParameterList, com.jbrunton.inject.Container.single.T)))/definition">definition</span><span class="symbol">:</span>&nbsp;<a href="../-definition.html"><span class="identifier">Definition</span></a><span class="symbol">&lt;</span><a href="single.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">&gt;</span> <span class="identifier">single</span><span class="symbol">(</span><span class="identifier" id="com.jbrunton.inject.Container$single(kotlin.Boolean, kotlin.Function1((com.jbrunton.inject.ParameterList, com.jbrunton.inject.Container.single.T)))/override">override</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;false<span class="symbol">, </span><span class="identifier" id="com.jbrunton.inject.Container$single(kotlin.Boolean, kotlin.Function1((com.jbrunton.inject.ParameterList, com.jbrunton.inject.Container.single.T)))/definition">definition</span><span class="symbol">:</span>&nbsp;<a href="../-definition.html"><span class="identifier">Definition</span></a><span class="symbol">&lt;</span><a href="single.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Registers a singleton <a href="../-definition.html">Definition</a> for the type <code>T</code>. All subsequent calls to <a href="get.html">get</a> for <code>T::class</code> will resolve
+to the same instance.</p>
+</td>
 </tr>
 </tbody>
 </table>

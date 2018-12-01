@@ -72,4 +72,4 @@ dependencies {
 
 ## Documentation
 
-For more details see [the docs](dokka/mini-container).
+For more examples see [Recipes](recipes). For more details see [the docs](dokka/mini-container).

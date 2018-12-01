@@ -2,15 +2,29 @@ package com.jbrunton.inject
 
 import kotlin.reflect.KClass
 
+/**
+ * The dependency injection container. Maintains mappings between types (as `KClass<*>` and `Definition<T>` functions
+ * which will resolve to an instance.
+ *
+ * @param parent the parent container.
+ */
 class Container(val parent: Container? = null) {
     private val singletonRegistry = HashMap<KClass<*>, Any>()
     private val singletonDefinitions = HashMap<KClass<*>, Definition<*>>()
     private val factoryDefinitions = HashMap<KClass<*>, Definition<*>>()
 
+    /**
+     * Registers a singleton [Definition] for the type `T`. All subsequent calls to [get()] for `T::class` will resolve
+     * to the same instance.
+     */
     inline fun <reified T : Any> single(override: Boolean = false, noinline definition: Definition<T>) {
         registerSingleton(T::class, override, definition)
     }
 
+    /**
+     * Registers a factory [Definition] for the type `T`. All subsequent calls to [get()] for `T::class` will be
+     * resolved by invoking `definition`.
+     */
     inline fun <reified T : Any> factory(override: Boolean = false, noinline definition: Definition<T>) {
         registerFactory(T::class, override, definition)
     }
