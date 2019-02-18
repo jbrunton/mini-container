@@ -9,3 +9,7 @@ inline fun <reified T: Any> HasContainer.resolve(noinline parameters: ParameterD
 }
 
 inline fun <reified T: Any> HasContainer.inject(): Lazy<T> = lazy { resolve<T>() }
+
+inline fun <reified T: Any> HasContainer.inject(
+        noinline parameters: ParameterDefinition = emptyParameterDefinition()
+): Lazy<T> = lazy { container.resolve(T::class, parameters) }

@@ -140,10 +140,4 @@ class ContainerTest {
         val foo: Foo = container.get()
         assertThat(baz.foo).isEqualTo(foo)
     }
-
-    class Foo
-
-    class Bar
-
-    class Baz(val foo: Foo? = null)
 }
