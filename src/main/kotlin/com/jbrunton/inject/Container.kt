@@ -9,7 +9,15 @@ import kotlin.reflect.KClass
  * @param parent the parent container.
  */
 class Container(val parent: Container? = null) {
-    internal data class Key(val klass: KClass<*>, val tag: Any?)
+    internal data class Key(val klass: KClass<*>, val tag: Any?) {
+        override fun toString(): String {
+            return if (tag == null) {
+                klass.java.name
+            } else {
+                "${klass.java.name}, tag=$tag"
+            }
+        }
+    }
 
     private val singletonRegistry = HashMap<Key, Any>()
     private val singletonDefinitions = HashMap<Key, Definition<*>>()
@@ -56,7 +64,7 @@ class Container(val parent: Container? = null) {
         return tryResolveSingleton(klass, tag, parameters)
                 ?: tryResolveFactory(klass, tag, parameters)
                 ?: parent?.resolve(klass, tag, parameters)
-                ?: throw ResolutionFailure(klass, tag)
+                ?: throw ResolutionFailure(Key(klass, tag))
     }
 
     fun <T : Any> registerSingleton(
@@ -65,7 +73,8 @@ class Container(val parent: Container? = null) {
             override: Boolean = false,
             definition: Definition<T>
     ) {
-        checkAndPut(singletonDefinitions, klass, tag, override, definition)
+        val key = Key(klass, tag)
+        checkAndPut(singletonDefinitions, key, override, definition)
     }
 
     fun <T : Any> registerFactory(
@@ -74,7 +83,8 @@ class Container(val parent: Container? = null) {
             override: Boolean = false,
             definition: Definition<T>
     ) {
-        checkAndPut(factoryDefinitions, klass, tag, override, definition)
+        val key = Key(klass, tag)
+        checkAndPut(factoryDefinitions, key, override, definition)
     }
 
     fun register(vararg modules: Module) {
@@ -117,15 +127,14 @@ class Container(val parent: Container? = null) {
 
     private fun checkAndPut(
             definitions: HashMap<Key, Definition<*>>,
-            klass: KClass<*>,
-            tag: Any?,
+            key: Key,
             override: Boolean,
             definition: Definition<*>)
     {
-        if (!override && isRegistered(klass, tag)) {
-            throw TypeAlreadyRegistered(klass, tag)
+        if (!override && isRegistered(key.klass, key.tag)) {
+            throw TypeAlreadyRegistered(key)
         }
-        definitions.put(Key(klass, tag), definition)
+        definitions.put(Key(key.klass, key.tag), definition)
     }
 }
 
