@@ -84,11 +84,11 @@ class Container(val parent: Container? = null) {
     }
 
     fun dryRun(parameters: DryRunParameters = DryRunParameters()) {
-        singletonDefinitions.forEach { klass, definition ->
-            definition.invoke(parameters.forClass(klass.klass))
+        singletonDefinitions.forEach { key, definition ->
+            definition.invoke(parameters.forClass(key))
         }
-        factoryDefinitions.forEach { klass, definition ->
-            definition.invoke(parameters.forClass(klass.klass))
+        factoryDefinitions.forEach { key, definition ->
+            definition.invoke(parameters.forClass(key))
         }
         parent?.dryRun(parameters)
     }

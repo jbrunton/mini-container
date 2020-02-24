@@ -1,8 +1,10 @@
 package com.jbrunton.inject
 
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.catchThrowable
 import org.junit.Before
 import org.junit.Test
+import java.lang.IllegalArgumentException
 
 class ContainerTest {
 
@@ -170,6 +172,22 @@ class ContainerTest {
         container.dryRun {
             paramsFor(Baz::class, parametersOf(Foo()))
         }
+    }
+
+    @Test
+    fun itValidatesWithParameterListsByTag() {
+        container.apply {
+            factory(tag = "my-tag") { (name: String) -> Foo(name) }
+        }
+
+        val thrown = catchThrowable {
+            container.dryRun { paramsFor(Foo::class, parametersOf("foo")) }
+        }
+        assertThat(thrown)
+                .isInstanceOf(IllegalArgumentException::class.java)
+                .hasMessageStartingWith("Can't get parameter value #0")
+
+        container.dryRun { paramsFor(Foo::class, tag = "my-tag", parameters = parametersOf("foo")) }
     }
 
     @Test
