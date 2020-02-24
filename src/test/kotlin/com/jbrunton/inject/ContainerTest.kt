@@ -1,8 +1,10 @@
 package com.jbrunton.inject
 
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.catchThrowable
 import org.junit.Before
 import org.junit.Test
+import java.lang.IllegalArgumentException
 
 class ContainerTest {
 
@@ -15,7 +17,7 @@ class ContainerTest {
 
     @Test
     fun resolvesSingletons() {
-        container.single{ Foo() }
+        container.single { Foo() }
 
         val foo1: Foo = container.get()
         val foo2: Foo = container.get()
@@ -49,6 +51,49 @@ class ContainerTest {
 
         assertThat(child.get<Foo>()).isEqualTo(foo)
         assertThat(child.get<Bar>()).isEqualTo(bar)
+    }
+
+    @Test
+    fun itResolvesSingletonsWithTags() {
+        val fooBar = Foo("bar")
+        val fooBaz = Foo("baz")
+        container.single { fooBar }
+        container.single(tag = "baz") { fooBaz }
+
+        assertThat(container.get<Foo>()).isEqualTo(fooBar)
+        assertThat(container.get<Foo>(tag = "baz")).isEqualTo(fooBaz)
+    }
+
+    @Test
+    fun itResolvesFactoriesWithTags() {
+        container.factory { Foo("bar") }
+        container.factory(tag = "baz") { Foo("baz") }
+
+        val fooBar: Foo = container.get()
+        val fooBaz: Foo = container.get(tag = "baz")
+
+        assertThat(fooBar.name).isEqualTo("bar")
+        assertThat(fooBaz.name).isEqualTo("baz")
+    }
+
+    @Test
+    fun itResolvesViaParentWithTags() {
+        val fooBar = Foo("bar")
+        val fooBaz = Foo("baz")
+        container.single(tag = "bar") { fooBar }
+        val child = container.createChildContainer().apply {
+            single(tag = "baz") { fooBaz }
+        }
+
+        assertThat(child.get<Foo>(tag = "bar")).isEqualTo(fooBar)
+        assertThat(child.get<Foo>(tag = "baz")).isEqualTo(fooBaz)
+    }
+
+    @Test
+    fun tagsCanBeAnything() {
+        val fooBar = Foo("bar")
+        container.single(tag = Tag("bar")) { fooBar }
+        assertThat(container.get<Foo>(tag = Tag("bar"))).isEqualTo(fooBar)
     }
 
     @Test
@@ -127,6 +172,22 @@ class ContainerTest {
         container.dryRun {
             paramsFor(Baz::class, parametersOf(Foo()))
         }
+    }
+
+    @Test
+    fun itValidatesWithParameterListsByTag() {
+        container.apply {
+            factory(tag = "my-tag") { (name: String) -> Foo(name) }
+        }
+
+        val thrown = catchThrowable {
+            container.dryRun { paramsFor(Foo::class, parametersOf("foo")) }
+        }
+        assertThat(thrown)
+                .isInstanceOf(IllegalArgumentException::class.java)
+                .hasMessageStartingWith("Can't get parameter value #0")
+
+        container.dryRun { paramsFor(Foo::class, tag = "my-tag", parameters = parametersOf("foo")) }
     }
 
     @Test

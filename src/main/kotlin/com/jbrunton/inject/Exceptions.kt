@@ -1,12 +1,19 @@
 package com.jbrunton.inject
 
-import kotlin.reflect.KClass
+class ResolutionFailure(message: String) : RuntimeException(message) {
+    internal constructor(key: Container.Key) : this(messageFor(key))
 
-class ResolutionFailure(klass: KClass<*>): RuntimeException(
-        "Unable to resolve type ${klass.qualifiedName}"
-)
+    companion object {
+        internal fun messageFor(key: Container.Key): String =
+                "Unable to resolve type $key"
+    }
+}
 
-class TypeAlreadyRegistered(klass: KClass<*>): RuntimeException(
-        "Type ${klass.qualifiedName} is already registered in this container, " +
-                "set override = true if intended"
-)
+class TypeAlreadyRegistered(message: String) : RuntimeException(message) {
+    internal constructor(key: Container.Key) : this(messageFor(key))
+
+    companion object {
+        internal fun messageFor(key: Container.Key): String =
+                "Type $key is already registered in this container, set override = true if intended"
+    }
+}
