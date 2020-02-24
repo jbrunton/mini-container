@@ -35,7 +35,7 @@ inline fun <reified T: Any> HasContainer.resolve(
  *     class MovieStore(override val container: Container) : HasContainer {
  *         val checkout: Checkout by inject()
  *         val comedy: Genre by inject(tag = "comedy")
- *         val startWars: Movie by inject { parametersOf(starWarsId) }
+ *         val starWars: Movie by inject { parametersOf(starWarsId) }
  *     }
  *
  * @param tag An optional tag.
