@@ -52,6 +52,49 @@ class ContainerTest {
     }
 
     @Test
+    fun itResolvesSingletonsWithTags() {
+        val fooBar = Foo("bar")
+        val fooBaz = Foo("baz")
+        container.single { fooBar }
+        container.single(tag = "baz") { fooBaz }
+
+        assertThat(container.get<Foo>()).isEqualTo(fooBar)
+        assertThat(container.get<Foo>(tag = "baz")).isEqualTo(fooBaz)
+    }
+
+    @Test
+    fun itResolvesFactoriesWithTags() {
+        container.factory { Foo("bar") }
+        container.factory(tag = "baz") { Foo("baz") }
+
+        val fooBar: Foo = container.get()
+        val fooBaz: Foo = container.get(tag = "baz")
+
+        assertThat(fooBar.name).isEqualTo("bar")
+        assertThat(fooBaz.name).isEqualTo("baz")
+    }
+
+    @Test
+    fun itResolvesViaParentWithTags() {
+        val fooBar = Foo("bar")
+        val fooBaz = Foo("baz")
+        container.single(tag = "bar") { fooBar }
+        val child = container.createChildContainer().apply {
+            single(tag = "baz") { fooBaz }
+        }
+
+        assertThat(child.get<Foo>(tag = "bar")).isEqualTo(fooBar)
+        assertThat(child.get<Foo>(tag = "baz")).isEqualTo(fooBaz)
+    }
+
+    @Test
+    fun tagsCanBeAnything() {
+        val fooBar = Foo("bar")
+        container.single(tag = Tag("bar")) { fooBar }
+        assertThat(container.get<Foo>(tag = Tag("bar"))).isEqualTo(fooBar)
+    }
+
+    @Test
     fun itReturnsIfTypeRegistered() {
         val foo = Foo()
         val bar = Bar()
