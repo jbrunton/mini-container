@@ -7,12 +7,13 @@ import org.junit.Test
 class HasContainerTest {
 
     lateinit var testContainer: Container
-    val foo = Foo()
+    val foo = Foo("foo")
 
     @Before
     fun setUp() {
         testContainer = Container()
         testContainer.single { foo }
+        testContainer.single(tag = "bar") { Foo("bar") }
         testContainer.factory { (foo: Foo) -> Baz(foo) }
     }
 
@@ -32,5 +33,16 @@ class HasContainerTest {
             val baz: Baz by inject { parametersOf(foo) }
         }
         assertThat(subject.baz.foo).isEqualTo(foo)
+    }
+
+    @Test
+    fun testInjectWithTags() {
+        val subject = object : HasContainer {
+            override val container: Container = testContainer
+            val foo: Foo by inject()
+            val fooBar: Foo by inject(tag = "bar")
+        }
+        assertThat(subject.foo.name).isEqualTo("foo")
+        assertThat(subject.fooBar.name).isEqualTo("bar")
     }
 }
