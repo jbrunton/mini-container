@@ -17,7 +17,7 @@ class ContainerTest {
 
     @Test
     fun resolvesSingletons() {
-        container.single{ Foo() }
+        container.single { Foo() }
 
         val foo1: Foo = container.get()
         val foo2: Foo = container.get()
