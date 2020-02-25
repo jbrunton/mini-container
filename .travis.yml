@@ -13,9 +13,9 @@ deploy:
   provider: pages
   skip_cleanup: true
   github_token: $GITHUB_TOKEN
-  keep_history: true
+  keep_history: false
   on:
-    branch: automate-docs
+    branch: master
   local_dir: docs
   target_branch: gh-pages
 
