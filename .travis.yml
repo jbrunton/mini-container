@@ -1,19 +1,30 @@
 language: java
+
 before_cache:
 - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
 - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
 cache:
   directories:
   - $HOME/.gradle/caches/
   - $HOME/.gradle/wrapper/
-script:
-  - ./gradlew check
-  - ./gradlew dokka
+
 deploy:
   provider: pages
   skip_cleanup: true
-  github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+  github_token: $GITHUB_TOKEN
   keep_history: true
   on:
-    branch: gh-pages
+    branch: master
   local_dir: docs
+  target_branch: test-docs
+
+jobs:
+  include:
+    - stage: test
+      script:
+        - ./gradlew check
+    - stage: docs
+      if: branch = master
+      script:
+        - ./gradlew dokka
