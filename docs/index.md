@@ -17,11 +17,8 @@ The syntax is heavily inspired by [Koin](https://insert-koin.io/), but with an i
 ## A simple example
 
 ```kotlin
-class UserViewModel(
-    val userId: String,
-    val repository: HttpRepository)
-{
-    ...
+class UserViewModel(val userId: String, val repository: HttpRepository) {
+    //...
 }
 
 val HttpModule = module {
@@ -30,7 +27,7 @@ val HttpModule = module {
 }
 
 val UiModule = module {
-    factory{ (userId: String) -> UserViewModel(userId, get()) }
+    factory { (userId: String) -> UserViewModel(userId, get()) }
 }
 
 class MyApp : Application(), HasContainer {
@@ -46,9 +43,7 @@ class UserProfileActivity : FragmentActivity(), HasContainer {
     val repository: HttpRepository by inject()
     val viewModel: UserViewModel by injectViewModel { parametersOf(userId) }
 
-    override val container by lazy {
-        (applicationContext as HasContainer).container
-    }
+    override val container by lazy { (applicationContext as HasContainer).container }
     
     private val userId get() = intent.extras["USER_ID"] as String
 }
@@ -62,7 +57,7 @@ First make sure you're using [Jitpack](https://jitpack.io/) by adding it as a re
 ```groovy
 allprojects {
     repositories {
-        ...
+        //...
         maven { url 'https://jitpack.io' }
     }
 }
