@@ -43,9 +43,7 @@ class UserProfileActivity : FragmentActivity(), HasContainer {
     val repository: HttpRepository by inject()
     val viewModel: UserViewModel by injectViewModel { parametersOf(userId) }
 
-    override val container by lazy {
-        (applicationContext as HasContainer).container
-    }
+    override val container by lazy { (applicationContext as HasContainer).container }
     
     private val userId get() = intent.extras["USER_ID"] as String
 }
