@@ -2,8 +2,6 @@ plugins {
     id 'org.jetbrains.kotlin.jvm'
 }
 
-group 'com.jbrunton'
-
 repositories {
     mavenCentral()
 }
