@@ -1,2 +1,1 @@
-rootProject.name = 'mini-container'
-
+include ':app', ':mini-container-mvvm', ':mini-container-core', ':mini-container-sample'
