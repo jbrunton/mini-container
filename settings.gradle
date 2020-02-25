@@ -1,1 +1,1 @@
-include 'mini-container-core'
+include ':app', ':mini-container-mvvm', ':mini-container-core'
