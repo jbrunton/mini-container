@@ -13,9 +13,9 @@ deploy:
   provider: pages
   skip_cleanup: true
   github_token: $GITHUB_TOKEN
-  keep_history: false
+  keep_history: true
   on:
-    branch: master
+    branch: protect-gh-pages
   local_dir: docs
   target_branch: gh-pages
 
@@ -25,6 +25,6 @@ jobs:
       script:
         - ./gradlew check
     - stage: docs
-      if: branch = master
+      if: branch = protect-gh-pages
       script:
         - ./gradlew dokka
