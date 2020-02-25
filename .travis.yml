@@ -25,6 +25,6 @@ jobs:
       script:
         - ./gradlew check
     - stage: docs
-      if: branch = master
+      if: branch = fix-docs-job
       script:
         - ./gradlew dokka
