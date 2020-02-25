@@ -17,11 +17,8 @@ The syntax is heavily inspired by [Koin](https://insert-koin.io/), but with an i
 ## A simple example
 
 ```kotlin
-class UserViewModel(
-    val userId: String,
-    val repository: HttpRepository)
-{
-    ...
+class UserViewModel(val userId: String, val repository: HttpRepository) {
+    //...
 }
 
 val HttpModule = module {
@@ -62,7 +59,7 @@ First make sure you're using [Jitpack](https://jitpack.io/) by adding it as a re
 ```groovy
 allprojects {
     repositories {
-        ...
+        //...
         maven { url 'https://jitpack.io' }
     }
 }
