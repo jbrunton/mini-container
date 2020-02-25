@@ -15,7 +15,7 @@ deploy:
   github_token: $GITHUB_TOKEN
   keep_history: true
   on:
-    branch: master
+    branch: automate-docs
   local_dir: docs
   target_branch: test-docs
 
