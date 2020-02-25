@@ -6,7 +6,6 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 group 'com.jbrunton.mini-container-mvvm'
-version '1.0'
 
 android {
     compileSdkVersion 28
