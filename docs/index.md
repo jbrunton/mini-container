@@ -17,7 +17,10 @@ The syntax is heavily inspired by [Koin](https://insert-koin.io/), but with an i
 ## A simple example
 
 ```kotlin
-class UserViewModel(val user: User, val repository: HttpRepository) {
+class UserViewModel(
+    val userId: String,
+    val repository: HttpRepository)
+{
     ...
 }
 
@@ -27,7 +30,7 @@ val HttpModule = module {
 }
 
 val UiModule = module {
-    factory{ (user: User) -> UserViewModel(user, get()) }
+    factory{ (userId: String) -> UserViewModel(userId, get()) }
 }
 
 class MyApp : Application(), HasContainer {
@@ -39,13 +42,15 @@ class MyApp : Application(), HasContainer {
     }
 }
 
-class MyActivity : FragmentActivity(), HasContainer {
+class UserProfileActivity : FragmentActivity(), HasContainer {
     val repository: HttpRepository by inject()
-    val viewModel: UserViewModel by injectViewModel()
+    val viewModel: UserViewModel by injectViewModel { parametersOf(userId) }
 
     override val container by lazy {
         (applicationContext as HasContainer).container
     }
+    
+    private val userId get() = intent.extras["USER_ID"] as String
 }
 
 ```
