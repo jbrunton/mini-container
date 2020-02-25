@@ -18,9 +18,6 @@ buildscript {
 }
 
 allprojects {
-    group 'com.jbrunton'
-    version '1.0'
-    
     repositories {
         google()
         jcenter()
