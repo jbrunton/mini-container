@@ -19,7 +19,7 @@ val module = {
 val container = Container()
 container.register(module)
 
-val foo = container.get<Foo::class>()
+val foo = container.get<Foo>()
 val bar: Bar = container.get()
 val baz: Baz = container.resolve { parametersOf(foo) }
 
