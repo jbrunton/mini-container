@@ -27,7 +27,7 @@ val HttpModule = module {
 }
 
 val UiModule = module {
-    factory{ (userId: String) -> UserViewModel(userId, get()) }
+    factory { (userId: String) -> UserViewModel(userId, get()) }
 }
 
 class MyApp : Application(), HasContainer {
