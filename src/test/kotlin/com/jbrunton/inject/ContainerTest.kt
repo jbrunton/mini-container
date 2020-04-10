@@ -201,4 +201,28 @@ class ContainerTest {
         val foo: Foo = container.get()
         assertThat(baz.foo).isEqualTo(foo)
     }
+
+    @Test
+    fun itDescribesFactoryDependencyFailures() {
+        val BarModule = module { factory { Baz(get()) } }
+        container.register(BarModule)
+
+        val thrown = catchThrowable { container.get<Baz>() }
+
+        assertThat(thrown)
+                .isInstanceOf(ResolutionFailure::class.java)
+                .hasMessage("Unable to resolve type com.jbrunton.inject.Foo, required by com.jbrunton.inject.Baz")
+    }
+
+    @Test
+    fun itDescribesSingletonDependencyFailures() {
+        val BarModule = module { single { Baz(get()) } }
+        container.register(BarModule)
+
+        val thrown = catchThrowable { container.get<Baz>() }
+
+        assertThat(thrown)
+                .isInstanceOf(ResolutionFailure::class.java)
+                .hasMessage("Unable to resolve type com.jbrunton.inject.Foo, required by com.jbrunton.inject.Baz")
+    }
 }

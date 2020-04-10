@@ -112,7 +112,11 @@ class Container(val parent: Container? = null) {
         val key = Key(klass, tag)
         var instance = singletonRegistry.get(key) as T?
         if (instance == null) {
-            instance = singletonDefinitions.get(key)?.invoke(parameters()) as T?
+            instance = try {
+                singletonDefinitions.get(key)?.invoke(parameters()) as T?
+            } catch (e: ResolutionFailure) {
+                throw ResolutionFailure(key, e)
+            }
             if (instance != null) {
                 singletonRegistry.put(key, instance)
             }
@@ -122,7 +126,11 @@ class Container(val parent: Container? = null) {
 
     private fun <T : Any> tryResolveFactory(klass: KClass<T>, tag: Any?, parameters: ParameterDefinition): T? {
         val key = Key(klass, tag)
-        return factoryDefinitions.get(key)?.invoke(parameters()) as T?
+        return try {
+            factoryDefinitions.get(key)?.invoke(parameters()) as T?
+        } catch (e: ResolutionFailure) {
+            throw ResolutionFailure(key, e)
+        }
     }
 
     private fun checkAndPut(
