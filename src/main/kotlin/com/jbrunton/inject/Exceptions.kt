@@ -1,11 +1,15 @@
 package com.jbrunton.inject
 
-class ResolutionFailure(message: String) : RuntimeException(message) {
-    internal constructor(key: Container.Key) : this(messageFor(key))
+class ResolutionFailure : RuntimeException {
+    internal constructor(key: Container.Key) : super(messageFor(key))
+    internal constructor(key: Container.Key, cause: ResolutionFailure) : super(messageFor(key, cause), cause)
 
     companion object {
         internal fun messageFor(key: Container.Key): String =
                 "Unable to resolve type $key"
+
+        internal fun messageFor(key: Container.Key, cause: ResolutionFailure): String =
+                "${cause.message}, required by $key"
     }
 }
 
